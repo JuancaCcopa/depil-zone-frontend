@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="FILTRO USUARIO" [options]="false">
+      <form class="form-inline" action="/action_page.php">
+        <label for="email" class="mr-sm-2">Nombre:</label>
+        <input type="text" class="form-control mb-2 mr-sm-2 col-md-4" id="email">
+        <button type="submit" class="btn btn-info mb-2 pul">Buscar</button>
+        <!-- <button type="button" class="btn btn-success" (click)="successSwal()">Success</button> -->
+        <button type="button" class="btn btn-info" data-toggle="modal" (click)="exampleModalCenter.show();">Nuevo Usuario</button>
+      </form>
+    </app-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-12 col-md-12">
+    <app-card cardTitle="REGISTROS DE USUARIO" cardClass="code-table" blockClass="pb-0">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>NOMBRE</th>
+              <th class="text-right">ESTADO</th>
+              <th>USUARIO REG</th>
+              <th>FECHA REG</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of ItemsArray">
+              <td>
+                <h6 class="mb-1">{{item.IdUsuario}}</h6>
+              </td>
+              <td>
+                <h6 class="mb-1">{{ item.Nombre }}</h6>
+              </td>
+              <td>
+                <div *ngIf="item.Estado"><h6 class="m-b-0 text-right">Activo</h6></div>
+              </td>
+              <td>
+                <h6 class="m-b-0">{{item.UsuarioRegistro}}</h6>
+              </td>
+              <td><h6 class="mb-1">{{  item.FechaRegistro | date:'short' }}</h6></td>
+              <td class="text-right">
+                <!-- <button (click)="openTab($event, option.tabId)"></button> -->
+                  <button type="button" class="btn btn-outline-primary" (click)="exampleModalCenter.show(); editar(item.IdUsuario)"><span aria-hidden="true">EDITAR</span></button>           
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
+  
+<app-ui-modal #exampleModalCenter dialogClass="modal-dialog-centered">
+  <div class="app-modal-header">
+    <h5 class="modal-title">Nuevo Usuario</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="nuevo()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    
+    <form>
+      <!-- <div class="form-group">
+        <label for="username">User Name:</label>
+        <input type="text" formControlName="username" placeholder="username" name="username" class="form-control" id="username">
+      </div> -->
+      <div class="form-group">
+        <label for="exampleInputEmail1">Nombre</label>
+        <input class="form-control" id="nombre"  required [(ngModel)]="usuario.Nombre" name="nombre" />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Usuario</label>
+        <input class="form-control"  required [(ngModel)]="usuario.Usuario" name="usuario" />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Clave</label>
+        <input class="form-control" required [(ngModel)]="usuario.Clave" name="Clave" />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Perfil</label>
+        <select class="form-control" [(ngModel)]="usuario.IdPerfil" name="perfil">
+          <option value="1">Administrador</option>
+          <option value="2">Contador</option>
+          <option value="3">Ventas</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Activo</label>
+        <select class="form-control" [(ngModel)]="usuario.Estado" name="estado">
+          <option value="1">Activo</option>
+          <option value="2">Inactivo</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="app-modal-footer">
+    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="exampleModalCenter.hide()">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="create()" >Guardar</button>
+    
+  </div>
+</app-ui-modal>
+
+
